@@ -1,82 +1,117 @@
+const canvas = document.getElementById('canvas');
+const context = canvas.getContext('2d');
+const uploadButton = document.getElementById('upload-button');
+const brightnessSlider = document.getElementById('brightnessSlider');
+const contrastSlider = document.getElementById('contrastSlider');
+const grayscaleSlider = document.getElementById('grayscaleSlider');
+const hueRotateSlider = document.getElementById('hueRotateSlider');
+const saturationSlider = document.getElementById('saturationSlider');
+const sepiaSlider = document.getElementById('sepiaSlider');
+const sourceImage = document.getElementById('sourceImage'); // Reference to the <img> tag
 
-var image = document.getElementById('sourceImage');
-var canvas = document.getElementById('canvas');
-var context = canvas.getContext('2d');
-var brightnessSlider = document.getElementById("brightnessSlider");
-var contrastSlider = document.getElementById("contrastSlider");
-var grayscaleSlider = document.getElementById("grayscaleSlider");
-var hueRotateSlider = document.getElementById("hueRotateSlider");
-var saturateSlider = document.getElementById("saturationSlider");
-var sepiaSlider = document.getElementById("sepiaSlider");
-
+let image = new Image();
+let originalImage = null;
 
 function uploadImage(event) {
-
-	image.src = URL.createObjectURL(event.target.files[0]);
-	image.onload = function () {
-		canvas.width = this.width;
-		canvas.height = this.height;
-		canvas.crossOrigin = "anonymous";
-		applyFilter();
-	}
-	
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            image.src = e.target.result;
+            originalImage = e.target.result; // Save the original image
+        };
+        reader.readAsDataURL(file);
+    }
 }
+
+image.onload = () => {
+    // Once the image is loaded, draw it on the canvas
+    canvas.width = image.width;
+    canvas.height = image.height;
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+    // Update the <img> tag with the uploaded image
+    sourceImage.src = image.src;
+};
 
 function applyFilter() {
+    const brightness = brightnessSlider.value;
+    const contrast = contrastSlider.value;
+    const grayscale = grayscaleSlider.value;
+    const hue = hueRotateSlider.value;
+    const saturation = saturationSlider.value;
+    const sepia = sepiaSlider.value;
 
-var filterString ="brightness(" + brightnessSlider.value + "%" +") contrast(" + contrastSlider.value + "%" +") grayscale(" + grayscaleSlider.value + "%" +") saturate(" + saturateSlider.value + "%" +") sepia(" + sepiaSlider.value + "%" +") hue-rotate(" + hueRotateSlider.value + "deg" + ")";
-context.filter = filterString;
-context.drawImage(image, 0, 0);
-}
-
-function brightenFilter() {
-	resetImage();
-	brightnessSlider.value = 130;
-	contrastSlider.value = 120;
-	saturateSlider.value = 120;
-	applyFilter();
-}
-
-function bwFilter() {
-	resetImage();
-	grayscaleSlider.value = 100;
-	brightnessSlider.value = 120;
-	contrastSlider.value = 120;
-	applyFilter();
-}
-
-function funkyFilter() {
-	resetImage();
-	hueRotateSlider.value = Math.floor(Math.random() * 360) + 1;
-	contrastSlider.value = 120;
-	applyFilter();
-}
-
-function vintageFilter() {
-	resetImage();
-	brightnessSlider.value = 120;
-	saturateSlider.value = 120;
-	sepiaSlider.value = 150;
-	applyFilter();
+    const filter = `
+        brightness(${brightness}%)
+        contrast(${contrast}%)
+        grayscale(${grayscale}%)
+        hue-rotate(${hue}deg)
+        saturate(${saturation}%)
+        sepia(${sepia}%)
+    `;
+    context.filter = filter;
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
 }
 
 function resetImage() {
-	brightnessSlider.value = 100;
-	contrastSlider.value = 100;
-	grayscaleSlider.value = 0;
-	hueRotateSlider.value = 0;
-	saturateSlider.value = 100;
-	sepiaSlider.value = 0;
-	applyFilter();
+    if (originalImage) {
+        image.src = originalImage;
+        image.onload = () => {
+            context.filter = 'none';
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+            // Update the <img> tag with the original image
+            sourceImage.src = originalImage;
+
+            // Reset sliders
+            brightnessSlider.value = 100;
+            contrastSlider.value = 100;
+            grayscaleSlider.value = 0;
+            hueRotateSlider.value = 0;
+            saturationSlider.value = 100;
+            sepiaSlider.value = 0;
+        };
+    }
 }
 
 function saveImage() {
-	
-    var linkElement = document.getElementById('link'); 
-	linkElement.setAttribute('download', 'edited_image.png');
-	var canvasData = canvas.toDataURL("image/png")  
-	canvasData.replace("image/png", "image/octet-stream")  
-	linkElement.setAttribute('href', canvasData);   
-	linkElement.click();   
-	
+    const link = document.createElement('a');
+    link.download = 'edited-image.png';
+    link.href = canvas.toDataURL();
+    link.click();
 }
+
+// Example preset filters
+function brightenFilter() {
+    brightnessSlider.value = 150;
+    contrastSlider.value = 110;
+    applyFilter();
+}
+
+function bwFilter() {
+    grayscaleSlider.value = 100;
+    contrastSlider.value = 120;
+    applyFilter();
+}
+
+function funkyFilter() {
+    hueRotateSlider.value = 180;
+    saturationSlider.value = 150;
+    applyFilter();
+}
+
+function vintageFilter() {
+    sepiaSlider.value = 80;
+    brightnessSlider.value = 110;
+    applyFilter();
+}
+
+// Event listeners for sliders
+brightnessSlider.addEventListener('input', applyFilter);
+contrastSlider.addEventListener('input', applyFilter);
+grayscaleSlider.addEventListener('input', applyFilter);
+hueRotateSlider.addEventListener('input', applyFilter);
+saturationSlider.addEventListener('input', applyFilter);
+sepiaSlider.addEventListener('input', applyFilter);
+
