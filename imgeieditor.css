@@ -1,178 +1,171 @@
-
-*{
+/* General styles */
+body {
+  font-family: 'Roboto', sans-serif;
   margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
 }
-body{
-  background-color: black;
-}
-.green{
-   width: 100%;
-    height: 0px;
-    color: white;
-    display: inline-block;
-    position: fixed;
-}
-h1{
+
+header {
+  background-color: #333;
   color: white;
-}
-h2{
-  margin-left: 40px;
-}
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-  
-  button {
-     float: right;
-    border-radius: 5px;
-    display: block;
-    color: black;
-    text-align: center;
-    font-weight: 100px;
-    font: 1em sans-serif;
-    padding: 10px 39px;
-    text-decoration: none;
-    margin-right: 10px;
-    margin-top: 10px;
-    background-color:white;
-    cursor: pointer;
-  }
-
- button:hover {
-    background-color: black;
-    color: white;
-  }
-
-  .help-textcenter-align{
-    margin-left: 45px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-
-  .containerapp{
-    width: 100%;
-    height: 80%;
-    margin-top: 40px;
-    color: #fff;
-  }
-
-  .image-preview img{
-  max-width: 490px;
-  max-height: 335px;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  }
-
-  .range-field{ 
-  font-size: 20px;
-  justify-content:center;
-  width: 100%;
-  height: 10px;
-  color: white;
-  margin-left: 170px;
-  accent-color: #e71279;
- } 
-
- input[type="range"]{
-  width: 60%;
-  position: relative;
-  display: inline-block;
-  margin-top: 15px;
-  color: black;
+  padding: 20px 0;
 }
 
-.preset-filters{
-  width: auto;
-  height: 150px;
-  color: white;
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
 }
 
-.btngreen{
-  background-color: black; /* Green */
-  border: 2px solid #e71279;
-  color: white;
-  padding: 16px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin-right: 140px;
-  margin-top: 1%;
-  transition-duration: 0.4s;
+h1 {
+  font-size: 1.8rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.actions button, .actions input {
+  margin-left: 10px;
+  font-size: 1rem;
+  padding: 10px 15px;
+  border: none;
   cursor: pointer;
-  box-shadow: 0px 8px 16px 0px rgba(207, 215, 215, 0.2);
+  transition: background-color 0.3s, transform 0.2s;
 }
 
-.btngreen:hover {
-  background-color: #e71279;
-  color: white;
+.actions button:hover, .actions input:hover {
+  background-color: #555;
+  transform: scale(1.1);
 }
 
- .file-controls a{
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.editor {
+  width: 100%;
+  max-width: 700px;
+  position: relative;
+  text-align: center;
+  margin-bottom: 40px; /* Increased space between image and sliders */
+}
+
+#canvas {
+  width: 100%;
+  height: auto;
   display: block;
-    position: relative;
-   width: 50%;
-    max-height: 45vmin;
-    margin: auto;
-} 
-
-.file-controls span{
-    display: block;
-    position: relative;
-    width: auto;
-    height: 40px;
-    background-color: #e71279;/* rgba(16, 119, 203, 0.8); */
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 5px;
-    font-weight: 90px;
-    font-size: 40px;  
-} 
+  border: 1px solid #ccc;
+}
 
 #sourceImage {
-	display: none;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
-.image-preview {
-	display: flex;
-	justify-content: center;
-	margin-top: 20px;
+.controls, .presets {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 700px;
+  margin-top: 20px;
 }
 
-#canvas {
-	max-height: 420px;
-	object-fit: contain;
+.slider-group {
+  margin-bottom: 30px;  /* Increased space between sliders */
+  width: 100%;
+  max-width: 600px;
 }
 
-.image-preview {
-	display: flex;
-	justify-content: center;
-	margin-top: 20px;
-  
+label {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
 }
 
-#canvas {
-	max-height: 420px;
-	object-fit: contain;
+input[type="range"] {
+  width: 100%;
+  transition: all 0.2s;
 }
 
-#upload-button{
-  display:block;
-  position: relative;
-  margin-left: 450px;
-  width: 260px;
-  background-color: #e71279;
-  color: #fff;
-  text-align: center;
-  padding: 11px 55px;
-  font-size: 20px;
-  font-weight: 400;
+input[type="range"]:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.preset-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-size: 1rem;
   cursor: pointer;
-  height: 25px;
+  transition: background-color 0.3s, transform 0.2s;
+  margin: 5px;
+}
+
+.preset-btn:hover {
+  background-color: #45a049;
+  transform: scale(1.1);
+}
+
+/* Preset buttons in one row */
+.presets {
+  display: flex;
+  flex-direction: row;  /* Change to row for horizontal alignment */
+  justify-content: center;  /* Center the buttons horizontally */
+  flex-wrap: wrap;  /* Allow buttons to wrap if there's not enough space */
+  gap: 10px;  /* Add some space between the buttons */
+  margin-top: 20px;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+position: relative;
+  width: 100%;
+  bottom: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .actions {
+      flex-direction: column;
+      margin-top: 10px;
+  }
+
+  .controls, .presets {
+      align-items: stretch;
+  }
+
+  .editor {
+    transform: scale(0.95);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  h1 {
+      font-size: 1.5rem;
+  }
+
+  .actions button, .actions input, .preset-btn {
+      font-size: 0.9rem;
+      padding: 8px 12px;
+  }
 }
 
