@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Image Editor</title>
+    <link rel="stylesheet" href="imgeieditor.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <h1>Image Editor</h1>
+                <div class="actions">
+                    <button class="btn save-btn" onclick="saveImage()">Save</button>
+                    <br>
+                    <button class="btn reset-btn" onclick="resetImage()">Reset</button>
+                    <br>
+                    <input type="file" id="upload-button" accept="image/*" onchange="uploadImage(event)">
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="editor">
+            <canvas id="canvas"></canvas> <br>
+            <img id="sourceImage" crossorigin="anonymous" width="500px" height="300px" alt="Uploaded image">
+        </section>
+
+        <section class="controls">
+            <div class="slider-group">
+                <label for="brightnessSlider">Brightness</label>
+                <input type="range" id="brightnessSlider" value="100" min="0" max="300" onchange="applyFilter()">
+            </div>
+            <div class="slider-group">
+                <label for="contrastSlider">Contrast</label>
+                <input type="range" id="contrastSlider" value="100" min="0" max="200" onchange="applyFilter()">
+            </div>
+            <div class="slider-group">
+                <label for="grayscaleSlider">Grayscale</label>
+                <input type="range" id="grayscaleSlider" value="0" min="0" max="100" onchange="applyFilter()">
+            </div>
+            <div class="slider-group">
+                <label for="hueRotateSlider">Hue</label>
+                <input type="range" id="hueRotateSlider" value="0" min="0" max="360" onchange="applyFilter()">
+            </div>
+            <div class="slider-group">
+                <label for="saturationSlider">Saturation</label>
+                <input type="range" id="saturationSlider" value="100" min="0" max="300" onchange="applyFilter()">
+            </div>
+            <div class="slider-group">
+                <label for="sepiaSlider">Sepia</label>
+                <input type="range" id="sepiaSlider" value="0" min="0" max="200" onchange="applyFilter()">
+            </div>
+        </section>
+
+        <section class="presets">
+            <h2>Preset Filters</h2>
+            <button class="btn preset-btn" onclick="brightenFilter()">Brighten</button>
+            <button class="btn preset-btn" onclick="bwFilter()">Black & White</button>
+            <button class="btn preset-btn" onclick="funkyFilter()">Funky</button>
+            <button class="btn preset-btn" onclick="vintageFilter()">Vintage</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>Image Editor &copy; 2025</p>
+    </footer>
+
+    <script src="image.js"></script>
+</body>
+</html>
